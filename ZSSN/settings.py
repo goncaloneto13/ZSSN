@@ -56,7 +56,7 @@ ROOT_URLCONF = 'ZSSN.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['ZSSN_app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

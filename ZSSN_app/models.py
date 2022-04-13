@@ -10,7 +10,6 @@ class Sobrevivente(models.Model):
         ("M","Masculino")
     )
 
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     Nome = models.CharField(max_length=255)
     Idade = models.PositiveIntegerField()
     Sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, null=False, blank=False)
@@ -18,10 +17,10 @@ class Sobrevivente(models.Model):
     Lat = models.DecimalField(max_digits=9, decimal_places=6)
     Infectado = models.BooleanField(default=False,editable=False)
 
-    Água = models.PositiveIntegerField()
-    Alimento = models.PositiveBigIntegerField()
-    Medicação = models.PositiveBigIntegerField()
-    Munição = models.PositiveBigIntegerField()
+    Água = models.PositiveIntegerField(default=0)
+    Alimento = models.PositiveBigIntegerField(default=0)
+    Medicação = models.PositiveBigIntegerField(default=0)
+    Munição = models.PositiveBigIntegerField(default=0)
     
 
     Itens = [Água,Alimento,Medicação,Munição]
