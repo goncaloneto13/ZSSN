@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class='card'>
+        <div class='card-body'>
+            <h3>Sobrevivente: {{ sobrevivente.Nome }}</h3>
+            <hr>
+
+            <h4><li>Itens:</li></h4>
+            <h5>Água : {{sobrevivente.Água}} </h5>
+            <h5>Alimento: {{sobrevivente.Alimento}} </h5>
+            <h5>Medicação : {{sobrevivente.Medicação}} </h5>
+            <h5>Munição : {{sobrevivente.Munição}} </h5>
+
+            <hr>
+
+            <h4><li>Local:</li></h4>
+            <form action="{% url 'edit_sobrevivente' sobrevivente.id %}" method = 'post'>
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button class='btn btn-success' type='submit'>Alterar</button>
+                <!--<a href="{% url 'home' %}" class='btn btn-danger' >Cancelar</a>-->
+
+            </form>
+
+            <h4><li>Outros Sobreviventes:</li></h4>
+            <table class='table'>
+
+                <thead>
+                    <th>Nome</th>
+                    <th>Infectado</th>
+                </thead>
+
+            {% for outros in outros_sob %}
+            {% if outros.id != sobrevivente.id%}
+            
+                <tr>
+                    <td>{{outros.Nome}}</td>
+                    <td>{{outros.Infectado}}</td>
+                    <td>
+                        <button class='btn btn-danger' >Infectado</button>
+                        {% if outros.Infectado == False %}
+                            <a href="" class='btn btn-warning'>Trocar Itens</a>
+                        {% endif %}    
+                    </td>    
+                </tr>
+          
+            {% endif %}    
+            {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+ 
+
+  
+
+
+ 
+
+  
