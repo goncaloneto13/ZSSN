@@ -16,8 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+from rest_framework import routers
+
+from ZSSN_app.api import viewsets as ZSSNviewsets
+
+route = routers.DefaultRouter()
+route.register(r'api/',ZSSNviewsets.ZSSNViewSet, basename='Zssn')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('ZSSN_app.urls'))
+    path('',include('ZSSN_app.urls')),
+    path('api/', include(route.urls))
     
 ]
