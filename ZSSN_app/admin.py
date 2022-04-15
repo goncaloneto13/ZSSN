@@ -1,6 +1,6 @@
 from django.contrib import admin
 from jmespath import search
-from ZSSN_app.models import Sobrevivente,Item
+from ZSSN_app.models import Sobrevivente,Inventario
 
 
 class Sobreviventes(admin.ModelAdmin):
@@ -10,9 +10,9 @@ class Sobreviventes(admin.ModelAdmin):
 
 admin.site.register(Sobrevivente, Sobreviventes)    
 
-class Itens(admin.ModelAdmin):
-    list_display = ('nome','pontos')
-admin.site.register(Item,Itens)
+class Inventarios(admin.ModelAdmin):
+    list_display = ('sobrevivente','agua','alimento','medicacao','municao')
 
+admin.site.register(Inventario,Inventarios)    
 
 # Register your models here.

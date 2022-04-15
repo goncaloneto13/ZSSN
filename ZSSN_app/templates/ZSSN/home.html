@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="card bg-light mb-3" style="max-width: 68rem;">
+<div class="card bg-light mb-3" style="max-width: 48rem;">
     <div class = 'card-body'>
         <h3>Sobreviventes</h3>
         <hr>
@@ -26,8 +26,7 @@
                     <td> {{ sobrevivente.Nome }}</td>
                     <td> {{ sobrevivente.Infectado}} </td>
                     <td>
-                        <a href="{% url 'edit_sobrevivente' sobrevivente.id %}" class='btn btn-warning '>Logar</a>
-                        <button class='btn btn-danger'>Excluir</button>
+                        <a href="{% url 'edit_sobrevivente' sobrevivente.id %}" class='btn btn-info '>Logar</a>
                     </td>
                 </tr>
 

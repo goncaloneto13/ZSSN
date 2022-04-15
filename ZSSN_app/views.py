@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.shortcuts import render,redirect
-from ZSSN_app.forms import AcusacoesForm, ItensForm, SobreviventeForm,LocalForm
-from ZSSN_app.models import Sobrevivente
+from ZSSN_app.forms import AcusacoesForm, InventarioForm, SobreviventeForm,LocalForm
+from ZSSN_app.models import Inventario, Sobrevivente
 
 # Create your views here.
 
@@ -14,18 +14,25 @@ def home(request):
 
 def add_sobreviventes(request):
     form = SobreviventeForm(request.POST or None)   
+    form_inventario = InventarioForm(request.POST or None)
+
     if request.POST:
-        if form.is_valid():
+        if form.is_valid() and form_inventario.is_valid():
             form.save()
+            form_inventario_ = form_inventario.save(commit=False)
+            form_inventario_.sobrevivente = Sobrevivente.objects.get(pk=form.save(commit=False).id)
+            form_inventario_.save()
             return redirect('home')
 
     context = { 
-        'form':form
+        'form':form,
+        'form_inventario': form_inventario
     }
     return render(request, 'ZSSN/add_sobreviventes.html', context)
 
 def edit_sobrevivente(request, sobrevivente_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
+    inventario = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
     outros_sob = Sobrevivente.objects.all()
     form = LocalForm(request.POST or None, instance=sobrevivente)   
 
@@ -42,58 +49,64 @@ def edit_sobrevivente(request, sobrevivente_pk):
         'form': form,
         'sobrevivente': sobrevivente,
         'outros_sob': outros_sob,
-        'outros_id': outros_id
+        'outros_id': outros_id,
+        'inventario': inventario
     }        
     return render(request, 'ZSSN/edit_sobrevivente.html', context)
 
-def trocar_itens(request, outro_pk,sobrevivente_pk):
+def trocar_itens(request,sobrevivente_pk,outro_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
     outro_s = Sobrevivente.objects.get(pk=outro_pk)
-    form_s = ItensForm(request.POST or None, instance=sobrevivente)
-    form_so = ItensForm(request.POST or None, instance=outro_s)
 
-    itens1 = [sobrevivente.Água,sobrevivente.Alimento,sobrevivente.Medicação,sobrevivente.Munição]
-    itens2 = [outro_s.Água,outro_s.Alimento,outro_s.Medicação,outro_s.Munição]
-    Itens = zip(sobrevivente.Itens,itens1)
+    inventario0 = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
+    inventario1= Inventario.objects.get(sobrevivente_id=outro_pk)
+   
+    form_s0 = InventarioForm(request.POST or None, instance=inventario0)
+    form_s1 = InventarioForm(request.POST or None, instance=inventario1)
+
+    itens0 = [inventario0.agua,inventario0.alimento,inventario0.medicacao,inventario0.municao]
+    itens1 = [inventario1.agua,inventario1.alimento,inventario1.medicacao,inventario1.municao]
 
     if request.POST:
-        if form_s.is_valid() and form_so.is_valid():
-            s1_novos_itens= request.POST.get('s1_novos_itens',None)
+        if form_s0.is_valid() and form_s1.is_valid():
+            s0_novos_itens= request.POST.get('s0_novos_itens',None)
+            s0_itens = request.POST.get('s0_itens',None)
+            s1_novos_itens = request.POST.get('s1_novos_itens',None)
             s1_itens = request.POST.get('s1_itens',None)
-            s2_novos_itens = request.POST.get('s2_novos_itens',None)
-            s2_itens = request.POST.get('s2_itens',None)
 
-            print( s1_novos_itens, s1_itens, s2_novos_itens, s2_itens)
+            print( s0_novos_itens, s0_itens, s1_novos_itens, s1_itens)
+            novos_itens0 = []
             novos_itens1 = []
-            novos_itens2 = []
+
             for i in range(0,8,2):
-                novos_itens1.append(int(s1_itens[i]) + int(s2_novos_itens[i]))
-                novos_itens2.append(int(s2_itens[i]) + int(s1_novos_itens[i]))
+                novos_itens0.append(int(s0_itens[i]) + int(s1_novos_itens[i]))
+                novos_itens1.append(int(s1_itens[i]) + int(s0_novos_itens[i]))
+            print( novos_itens0, novos_itens1)    
 
-            form_s_ = form_s.save(commit='false')
-            form_s_.Água = novos_itens1[0]
-            form_s_.Alimento = novos_itens1[1]
-            form_s_.Medicamento = novos_itens1[2]
-            form_s_.Munição = novos_itens1[3]
-            form_s_.save()
-
-            form_so_ = form_so.save(commit='false')
-            form_so_.Água = novos_itens2[0]
-            form_so_.Alimento = novos_itens2[1]
-            form_so_.Medicamento = novos_itens2[2]
-            form_so_.Munição = novos_itens2[3]
-            form_so_.save()
-            print( novos_itens1, novos_itens2)
-            return redirect('trocar_itens',outro_pk,sobrevivente_pk)
+            form_s0_ = form_s0.save(commit=False)
+            form_s0_.agua = novos_itens0[0]
+            form_s0_.alimento = novos_itens0[1]
+            form_s0_.medicamento = novos_itens0[2]
+            form_s0_.municao = novos_itens0[3]
+            form_s0_.save()
+  
+            form_s1_ = form_s1.save(commit=False)
+            form_s1_.agua = novos_itens1[0]
+            form_s1_.alimento = novos_itens1[1]
+            form_s1_.medicamento = novos_itens1[2]
+            form_s1_.municao = novos_itens1[3]
+            form_s1_.save()
+     
+            
+            return redirect('trocar_itens',sobrevivente_pk,outro_pk)
   
     context ={
         'outro_s':outro_s,
         'sobrevivente':sobrevivente,
-        'itens1': Itens,
+        'qtd_itens0':itens0,
         'qtd_itens1':itens1,
-        'qtd_itens2':itens2,
-        'form_s':form_s,
-        'form_so':form_so
+        'form_s0':form_s0,
+        'form_s1':form_s1
     }
     return render(request, 'ZSSN/trocar_itens.html', context)
 

@@ -21,7 +21,8 @@ from rest_framework import routers
 from ZSSN_app.api import viewsets as ZSSNviewsets
 
 route = routers.DefaultRouter()
-route.register(r'api/',ZSSNviewsets.ZSSNViewSet, basename='Zssn')
+route.register(r'Sobreviventes/',ZSSNviewsets.SobreviventeViewSet, basename='Sobreviventes')
+route.register(r'Inventarios/',ZSSNviewsets.InventarioViewSet, basename='Inventarios')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

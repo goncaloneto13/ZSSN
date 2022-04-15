@@ -2,14 +2,21 @@
 
 {% block content %}
 <div class="card bg-light mb-3" style="max-width: 28rem;">
-        <div class='card-body'>
+        <div class='card-body' >
             <h4>Registrar Sobrevivente</h4>
             <hr>
-            <form class="form-group" action="{% url 'add_sobreviventes' %}" method="post">
+            <form class="form-group" action="{% url 'add_sobreviventes' %}" method="post" align="left">
                 {% csrf_token %} 
-                <table>
+                <table class='table'>
                     {{ form.as_table }}
+                </table>    
+
+                <h4> &nbsp Inventario:</h4>
+
+                <table class='table'>
+                    {{ form_inventario.as_table }}
                 </table>
+
                 <hr>
                 <button class='btn btn-success' type="submit">Salvar</button>
                 <a href="{% url 'home' %}" class='btn btn-danger'>Cancelar</a>

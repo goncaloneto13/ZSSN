@@ -9,48 +9,69 @@
         <h4>Trocar itens com {{outro_s.Nome}}</h4>
         <hr>
         
-        <h4><li>Meus Pontos:   <span name='total_pontos{{sobrevivente.id}}'></span></li></h4>
-
-        
-        <form type='form-group' action="{% url 'trocar_itens' outro_s.id sobrevivente.id %}" method='post'>
-            <span hidden>{{form_so}}{{form_s}}</span>
+              
+        <form type='form-group' action="{% url 'trocar_itens' sobrevivente.id outro_s.id%}" method='post'>
+            <span hidden>{{form_s0.as_p}}{{form_s1.as_p}}</span>
             {% csrf_token %}
             
-            <table>
+            <table class='table'>
+                <thead class="thead-dark">
+                    <th >Item</th>
+                    <th>Quantidade</th>
+                    <th></th>
+                    <th>Item para trocar</th>
+                    <th>Pontos Uni.</th>
+                    
+
+                </thead>
+
                 {% for item in sobrevivente.Itens %}
                     <tr>
                         <h5> <td>{{item}}
                         <td> <input name="{{item}}{{sobrevivente.id}}"disabled='true' size=1></input> </td> 
-                        <td> <a name='sub{{item}}{{sobrevivente.id}}'class='btn btn-danger'>-</a>   </td>
-                        <td> <a name="soma{{item}}{{sobrevivente.id}}" class='btn btn-success'>+</a>  </td>
-                        <td> <input name="pontos{{item}}{{sobrevivente.id}}" disabled='true' size=1 ></input></td>
+                        <td> <a name='sub{{item}}{{sobrevivente.id}}'class='btn btn-danger'>-</a> 
+                             <a name="soma{{item}}{{sobrevivente.id}}" class='btn btn-success'>+</a>  </td>
                         <td> <input name="item{{item}}{{sobrevivente.id}}" disabled='true' size=1 ></input></td>
+                        <td> <input name="pontos{{item}}{{sobrevivente.id}}" disabled='true' size=1 ></input></td>
+                        
                         </h5> </td> 
                     </tr>
                 {% endfor%}
             </table>
 
-            <input name='s1_novos_itens' hidden=''>
-            <input name='s1_itens' hidden=''>
-
+            <input name='s0_novos_itens' hidden=''>
+            <input name='s0_itens' hidden=''>
+            <hr>
+            <h4><li>Meus Pontos:   <span name='total_pontos{{sobrevivente.id}}'></span></li></h4>
             <hr>        
             <h4><li>Pontos de {{outro_s.Nome}}:   <span name='total_pontos{{outro_s.id}}'></span> </li></h4>
-            <table>  
+            <hr>
+            <table class='table'>
+                <thead class="thead-dark">
+                    <th >Item</th>
+                    <th>Quantidade</th>
+                    <th></th>
+                    <th>Item para trocar</th>
+                    <th>Pontos Uni.</th>
+                    
+
+                </thead> 
                 {% for item in outro_s.Itens %}
                     <tr>
                         <h5> <td>{{item}}
                             <td><input name="{{item}}{{outro_s.id}}"disabled='true' size=1></input> </td> 
-                            <td><a name='sub{{item}}{{outro_s.id}}'class='btn btn-danger'>-</a> </td>   
-                            <td><a name="soma{{item}}{{outro_s.id}}" class='btn btn-success'>+</a>  </td> 
-                            <td><input name="pontos{{item}}{{outro_s.id}}"disabled='true' size=1></input></td> 
+                            <td><a name='sub{{item}}{{outro_s.id}}'class='btn btn-danger'>-</a>  
+                            <a name="soma{{item}}{{outro_s.id}}" class='btn btn-success'>+</a>  </td>
                             <td><input name="item{{item}}{{outro_s.id}}"disabled='true' size=1></input></td> 
+                            <td><input name="pontos{{item}}{{outro_s.id}}"disabled='true' size=1></input></td> 
+                             
                         </h5></td> 
                     </tr>   
                 {% endfor%}
             </table>
 
-            <input name='s2_novos_itens' hidden=''>
-            <input name='s2_itens' hidden=''>
+            <input name='s1_novos_itens' hidden=''>
+            <input name='s1_itens' hidden=''>
 
             <hr>
 
@@ -67,8 +88,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"> </script>
 
 <script>
-    var users = [{{outro_s.id}},{{sobrevivente.id}}]
-    var cont = [{{ qtd_itens2 }},{{ qtd_itens1 }}];
+    var users = [{{sobrevivente.id}},{{outro_s.id}}]
+    var cont = [{{ qtd_itens0 }},{{ qtd_itens1 }}];
     var itens = ['Água','Alimento','Medicação','Munição']
     var pontos = [[0,0,0,0],[0,0,0,0]]
     var iten_trocados = [[0,0,0,0],[0,0,0,0]]
@@ -134,10 +155,10 @@
     })
 
     $('#trocar').click(function(){
+        $('[name=s0_itens]').val(cont[0])
+        $('[name=s0_novos_itens]').val(iten_trocados[0])
         $('[name=s1_itens]').val(cont[1])
         $('[name=s1_novos_itens]').val(iten_trocados[1])
-        $('[name=s2_itens]').val(cont[0])
-        $('[name=s2_novos_itens]').val(iten_trocados[0])
     })
 })
 

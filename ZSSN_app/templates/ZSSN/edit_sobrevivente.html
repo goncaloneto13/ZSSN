@@ -2,20 +2,28 @@
 
 
 {% block content %}
-<div class="card bg-light mb-3" style="max-width: 68rem;">
+<div class="card bg-light mb-3" style="max-width: 48rem;">
 
     <div class="card-body" align="left">
         <center><h3>Sobrevivente: {{ sobrevivente.Nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </center>
-          <hr>
+        <hr> <table class='table'>
+            <thead> <th><h5>Sexo: {{sobrevivente.Sexo}}</h5>  </th><th> <h5>Idade: {{sobrevivente.Idade}} </h5></th><td><td></td>
+
+            </td></thead>
+        </table>
+  
             <h4><li>Meus itens:</li></h4>
-            <table>
+            <table class='table'>
+                <thead class="thead-dark">
+                    <th >Item</th>
+                    <th>Quantidade</th>
+                </thead>     
               
-                <tr> <td>Água :</td> <td>{{sobrevivente.Água}} </td></tr>
-                <tr> <td>Alimento:</td> <td>{{sobrevivente.Alimento}}</td> </tr>
-                <tr> <td>Medicação :</td> <td>{{sobrevivente.Medicação}}</td> </tr>
-                <tr> <td>Munição :</td> <td>{{sobrevivente.Munição}}</td> </tr>
+                <tr> <td>Água :</td> <td>{{inventario.agua}} </td></tr>
+                <tr> <td>Alimento:</td> <td>{{inventario.alimento}}</td> </tr>
+                <tr> <td>Medicação :</td> <td>{{inventario.medicacao}}</td> </tr>
+                <tr> <td>Munição :</td> <td>{{inventario.municao}}</td> </tr>
         
-               
             </table>
 
             <hr>
@@ -48,9 +56,9 @@
                     <td>{{outros.Nome}}</td>
                     <td>{{outros.Infectado}}</td>
                     <td>{{outros.acusacoes}}</td>
-                    <td> {% if outros.Infectado == False %}    
+                    <td> {% if outros.Infectado == False and sobrevivente.Infectado == False %}    
                             <a href="{% url 'acusar' sobrevivente.id outros.id %}" id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</a>                    
-                            <a href="{% url 'trocar_itens' outros.id sobrevivente.id %}" class='btn btn-warning'>Trocar Itens</a>
+                            <a href="{% url 'trocar_itens' sobrevivente.id outros.id %}" class='btn btn-warning'>Trocar Itens</a>
                         {% endif%}
                     </td>    
                 </tr>      
@@ -72,6 +80,7 @@
 <script>
 
     var outros = {{outros_id}}
+    
     
     $.each(outros, function(i,value){
         console.log(i,value)
