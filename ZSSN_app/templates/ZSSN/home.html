@@ -3,17 +3,18 @@
 
 {% block content %}
 
-<div class = 'card'>
+<div class="card bg-light mb-3" style="max-width: 68rem;">
     <div class = 'card-body'>
         <h3>Sobreviventes</h3>
         <hr>
-        <a class='btn btn-success' href="{% url 'add_sobreviventes'  %}">Registrar Sobrevivente</a>
+       
         <table class='table'>
 
             <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Infectado</th>
+                    <th>Ações</th>
                 </tr>  
             </thead>
             <body>
@@ -34,10 +35,13 @@
 
             </body>
 
-
         </table>
+        <hr>
 
-        <a href="api" class='btn btn-success'></a>
+
+        <a class='btn btn-success' href="{% url 'add_sobreviventes'  %}">Registrar Sobrevivente</a>
+
+        <a href="api" class='btn btn-info'>Api Rest</a>
     
     </div>
 </div>    

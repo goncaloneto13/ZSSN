@@ -2,12 +2,12 @@
 
 
 {% block content %}
-    <div class='card'>
-        <div class='card-body'>
-            <h3>Sobrevivente: {{ sobrevivente.Nome }}</h3>
-            <hr>
+<div class="card bg-light mb-3" style="max-width: 68rem;">
 
-            <h4><li>Itens:</li></h4>
+    <div class="card-body" align="left">
+        <center><h3>Sobrevivente: {{ sobrevivente.Nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </center>
+          <hr>
+            <h4><li>Meus itens:</li></h4>
             <h5>Água : {{sobrevivente.Água}} </h5>
             <h5>Alimento: {{sobrevivente.Alimento}} </h5>
             <h5>Medicação : {{sobrevivente.Medicação}} </h5>
@@ -15,15 +15,16 @@
 
             <hr>
 
-            <h4><li>Local:</li></h4>
+            <h4><li>Alterar Local:</li></h4>
             <form action="{% url 'edit_sobrevivente' sobrevivente.id %}" method = 'post'>
                 {% csrf_token %}
                 {{ form.as_p }}
 
-                <button class='btn btn-success' type='submit'>Alterar</button>
+                <button class='btn btn-success' type='submit'>Salvar</button>
                 <!--<a href="{% url 'home' %}" class='btn btn-danger' >Cancelar</a>-->
 
             </form>
+            <hr>
 
             <h4><li>Outros Sobreviventes:</li></h4>
             <table class='table'>
@@ -31,21 +32,25 @@
                 <thead>
                     <th>Nome</th>
                     <th>Infectado</th>
+                    <th>Acusações</th>
+                    <th>Ações</th>
                 </thead>
 
             {% for outros in outros_sob %}
             {% if outros.id != sobrevivente.id%}
-            
+
+           
+                       
                 <tr>
                     <td>{{outros.Nome}}</td>
                     <td>{{outros.Infectado}}</td>
-                    <td>
-                        <button class='btn btn-danger' >Infectado</button>
-                        {% if outros.Infectado == False %}
-                            <a href="" class='btn btn-warning'>Trocar Itens</a>
-                        {% endif %}    
+                    <td>{{outros.acusacoes}}</td>
+                    <td> {% if outros.Infectado == False %}    
+                            <a href="{% url 'acusar' sobrevivente.id outros.id %}" id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</a>                    
+                            <a href="{% url 'trocar_itens' outros.id sobrevivente.id %}" class='btn btn-warning'>Trocar Itens</a>
+                        {% endif%}
                     </td>    
-                </tr>
+                </tr>      
           
             {% endif %}    
             {% endfor %}
@@ -53,6 +58,33 @@
             </table>
         </div>
     </div>
+
+<script 
+    src="https://code.jquery.com/jquery-3.6.0.js" 
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+    crossorigin="anonymous">
+</script>
+
+
+<script>
+
+    var outros = {{outros_id}}
+    
+    $.each(outros, function(i,value){
+        console.log(i,value)
+
+        var cont_infec = $("[name=outra_acusacoes"+value+"]").val()
+        var click = false
+        $("[name=outra_acusacoes"+value+"]").val(cont_infec)
+
+        $('#btn_infectado'+value).click( function(){
+            console.log(cont_infec)
+            cont_infec++;
+            $("[name=outra_acusacoes"+value+"]").val(cont_infec)
+    
+        })
+    })
+</script>   
 
 {% endblock %}
 

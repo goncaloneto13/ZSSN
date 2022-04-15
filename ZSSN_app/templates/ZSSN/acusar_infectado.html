@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card bg-light mb-3" style="max-width: 28rem;">
+    <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.Nome }}  </h3> </div>
+    <div class="card-body" align="left">
+        <h4>Tem certeza que {{acusado.Nome }} está Infectado? </h4>
+        <form action="{% url 'acusar' sobrevivente.id acusado.id%}" method='post'>
+            {% csrf_token %}
+            <span hidden =''>{{acusar_form}}</span>
+            <hr>
+            <h4>Acusações: {{acusado.acusacoes}}</h4>
+            <hr>
+            <button href="{% url 'acusar' sobrevivente.id acusado.id %}" id='btn_infectado{{outros.id}}' class='btn btn-success' type='submit' >Sim</button>
+            <a href="{% url 'edit_sobrevivente' sobrevivente.id %}"class='btn btn-danger'>Não</a></center>
+        </form>
+  
+
+    </div>
+</div>        
+
+
+
+{% endblock %}
