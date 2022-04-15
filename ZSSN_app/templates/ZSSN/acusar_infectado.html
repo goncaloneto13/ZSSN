@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="card bg-light mb-3" style="max-width: 28rem;">
-    <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.Nome }}  </h3> </div>
+    <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.nome }}  </h3> </div>
     <div class="card-body" align="left">
-        <h4>Tem certeza que {{acusado.Nome }} está Infectado? </h4>
+        <h4>Tem certeza que {{acusado.nome }} está Infectado? </h4>
         <form action="{% url 'acusar' sobrevivente.id acusado.id%}" method='post'>
             {% csrf_token %}
             <span hidden =''>{{acusar_form}}</span>

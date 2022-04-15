@@ -5,9 +5,9 @@
 <div class="card bg-light mb-3" style="max-width: 48rem;">
 
     <div class="card-body" align="left">
-        <center><h3>Sobrevivente: {{ sobrevivente.Nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </center>
+        <center><h3>Sobrevivente: {{ sobrevivente.nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </center>
         <hr> <table class='table'>
-            <thead> <th><h5>Sexo: {{sobrevivente.Sexo}}</h5>  </th><th> <h5>Idade: {{sobrevivente.Idade}} </h5></th><td><td></td>
+            <thead> <th><h5>Sexo: {{sobrevivente.sexo}}</h5>  </th><th> <h5>Idade: {{sobrevivente.idade}} </h5></th><td><td></td>
 
             </td></thead>
         </table>
@@ -43,7 +43,7 @@
             <table class='table'>
 
                 <thead>
-                    <th>Nome</th>
+                    <th>nome</th>
                     <th>Infectado</th>
                     <th>Acusações</th>
                     <th>Ações</th>
@@ -53,10 +53,10 @@
             {% if outros.id != sobrevivente.id%}
          
                 <tr>
-                    <td>{{outros.Nome}}</td>
-                    <td>{{outros.Infectado}}</td>
+                    <td>{{outros.nome}}</td>
+                    <td>{{outros.infectado}}</td>
                     <td>{{outros.acusacoes}}</td>
-                    <td> {% if outros.Infectado == False and sobrevivente.Infectado == False %}    
+                    <td> {% if outros.infectado == False and sobrevivente.infectado == False %}    
                             <a href="{% url 'acusar' sobrevivente.id outros.id %}" id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</a>                    
                             <a href="{% url 'trocar_itens' sobrevivente.id outros.id %}" class='btn btn-warning'>Trocar Itens</a>
                         {% endif%}
@@ -77,22 +77,16 @@
 </script>
 
 
-<script>
+<script> 
 
-    var outros = {{outros_id}}
     
-    
-    $.each(outros, function(i,value){
-        console.log(i,value)
 
-        var cont_infec = $("[name=outra_acusacoes"+value+"]").val()
+    $.each({{outros_id}}, function(i,value){ 
         var click = false
-        $("[name=outra_acusacoes"+value+"]").val(cont_infec)
 
         $('#btn_infectado'+value).click( function(){
-            console.log(cont_infec)
-            cont_infec++;
-            $("[name=outra_acusacoes"+value+"]").val(cont_infec)
+            console.log('click')
+            $('#btn_infectado'+value).attr('disabled',true)
     
         })
     })

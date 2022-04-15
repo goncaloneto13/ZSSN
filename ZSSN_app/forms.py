@@ -8,12 +8,12 @@ class SobreviventeForm(forms.ModelForm):
     class Meta:
         model = Sobrevivente
         fields = '__all__'
-        exclude = ['acusacoes','acusacao1','acusacao2','acusacao3','Infectado','Água','Alimento','Medicação','Munição']
+        exclude = ['infectado','acusacoes']
 
 class LocalForm(forms.ModelForm):
     class Meta:
         model=Sobrevivente
-        fields = ['Log','Lat'] 
+        fields = ['log','lat'] 
 
 class AcusacoesForm(forms.ModelForm):
     class Meta:

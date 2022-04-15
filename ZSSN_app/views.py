@@ -86,14 +86,14 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
             form_s0_ = form_s0.save(commit=False)
             form_s0_.agua = novos_itens0[0]
             form_s0_.alimento = novos_itens0[1]
-            form_s0_.medicamento = novos_itens0[2]
+            form_s0_.medicacao = novos_itens0[2]
             form_s0_.municao = novos_itens0[3]
             form_s0_.save()
   
             form_s1_ = form_s1.save(commit=False)
             form_s1_.agua = novos_itens1[0]
             form_s1_.alimento = novos_itens1[1]
-            form_s1_.medicamento = novos_itens1[2]
+            form_s1_.medicacao = novos_itens1[2]
             form_s1_.municao = novos_itens1[3]
             form_s1_.save()
      
@@ -121,7 +121,7 @@ def acusar(request, sobrevivente_pk, acusado_pk):
             acusar_form_ = acusar_form.save(commit=False)
             acusar_form_.acusacoes += 1
             if (acusado.acusacoes >= 3):     
-                acusar_form_.Infectado = True
+                acusar_form_.infectado = True
 
             acusar_form_.save()
             acusar_form.save()    

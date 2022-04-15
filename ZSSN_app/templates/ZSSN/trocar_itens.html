@@ -3,10 +3,10 @@
 {% block content %}
 
 <div class="card bg-light mb-3" style="max-width: 48rem;">
-    <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.Nome }}  </h3> </div>
+    <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.nome }}  </h3> </div>
     <div class="card-body" align="left">
   
-        <h4>Trocar itens com {{outro_s.Nome}}</h4>
+        <h4>Trocar itens com {{outro_s.nome}}</h4>
         <hr>
         
               
@@ -25,7 +25,7 @@
 
                 </thead>
 
-                {% for item in sobrevivente.Itens %}
+                {% for item in sobrevivente.itens %}
                     <tr>
                         <h5> <td>{{item}}
                         <td> <input name="{{item}}{{sobrevivente.id}}"disabled='true' size=1></input> </td> 
@@ -44,7 +44,7 @@
             <hr>
             <h4><li>Meus Pontos:   <span name='total_pontos{{sobrevivente.id}}'></span></li></h4>
             <hr>        
-            <h4><li>Pontos de {{outro_s.Nome}}:   <span name='total_pontos{{outro_s.id}}'></span> </li></h4>
+            <h4><li>Pontos de {{outro_s.nome}}:   <span name='total_pontos{{outro_s.id}}'></span> </li></h4>
             <hr>
             <table class='table'>
                 <thead class="thead-dark">
@@ -56,7 +56,7 @@
                     
 
                 </thead> 
-                {% for item in outro_s.Itens %}
+                {% for item in outro_s.itens %}
                     <tr>
                         <h5> <td>{{item}}
                             <td><input name="{{item}}{{outro_s.id}}"disabled='true' size=1></input> </td> 

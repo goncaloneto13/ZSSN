@@ -4,9 +4,9 @@ from ZSSN_app.models import Sobrevivente,Inventario
 
 
 class Sobreviventes(admin.ModelAdmin):
-    list_display = ('Nome','Infectado','Log','Lat')
-    list_display_links = ('Nome','Infectado')
-    search_fields =('Nome',)
+    list_display = ('nome','infectado','log','lat')
+    list_display_links = ('nome','infectado')
+    search_fields =('nome',)
 
 admin.site.register(Sobrevivente, Sobreviventes)    
 
