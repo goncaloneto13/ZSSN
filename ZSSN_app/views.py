@@ -57,7 +57,6 @@ def trocar_itens(request, outro_pk,sobrevivente_pk):
     Itens = zip(sobrevivente.Itens,itens1)
 
     if request.POST:
-        print('okok')
         if form_s.is_valid() and form_so.is_valid():
             s1_novos_itens= request.POST.get('s1_novos_itens',None)
             s1_itens = request.POST.get('s1_itens',None)
@@ -95,7 +94,6 @@ def trocar_itens(request, outro_pk,sobrevivente_pk):
         'qtd_itens2':itens2,
         'form_s':form_s,
         'form_so':form_so
-
     }
     return render(request, 'ZSSN/trocar_itens.html', context)
 

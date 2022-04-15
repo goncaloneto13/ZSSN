@@ -8,10 +8,15 @@
         <center><h3>Sobrevivente: {{ sobrevivente.Nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </center>
           <hr>
             <h4><li>Meus itens:</li></h4>
-            <h5>Água : {{sobrevivente.Água}} </h5>
-            <h5>Alimento: {{sobrevivente.Alimento}} </h5>
-            <h5>Medicação : {{sobrevivente.Medicação}} </h5>
-            <h5>Munição : {{sobrevivente.Munição}} </h5>
+            <table>
+              
+                <tr> <td>Água :</td> <td>{{sobrevivente.Água}} </td></tr>
+                <tr> <td>Alimento:</td> <td>{{sobrevivente.Alimento}}</td> </tr>
+                <tr> <td>Medicação :</td> <td>{{sobrevivente.Medicação}}</td> </tr>
+                <tr> <td>Munição :</td> <td>{{sobrevivente.Munição}}</td> </tr>
+        
+               
+            </table>
 
             <hr>
 
@@ -38,9 +43,7 @@
 
             {% for outros in outros_sob %}
             {% if outros.id != sobrevivente.id%}
-
-           
-                       
+         
                 <tr>
                     <td>{{outros.Nome}}</td>
                     <td>{{outros.Infectado}}</td>
