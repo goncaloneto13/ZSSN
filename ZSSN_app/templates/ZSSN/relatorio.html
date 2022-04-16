@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="card bg-light mb-3" style="max-width: 48rem;">
+    <div class="card-header" >   <h3>Relatório   </h3> </div>
+    <div class="card-body" align="left">
+
+        <h4> Porcetagem de infectados: {{infectados_p}} % </h4>
+        <hr>    
+        <h4>Porcentagem de não infectados: {{n_infectados_p}} %   </h4>
+        <hr>
+        
+        <h4>Quantidade média de itens por sobrevivente:</h4>
+
+        <table class='table'>
+            {% for item in itens%}
+            <tr>
+                {% for i in item%}
+                    <td><h5>{{i}}</h5></td>
+                {% endfor %}
+            </tr>
+
+            {% endfor %}
+        </table>
+        <hr>
+        <h4>Pontos perdidos por causa do sobrevivente infectado:  {{pontos_perdidos}}</h4>
+        <hr>
+        <center><a align ='right' href="{% url 'home' %}" class='btn btn-info'>Voltar</a></center>
+    </div>
+</div>    
+
+
+
+{% endblock  %}

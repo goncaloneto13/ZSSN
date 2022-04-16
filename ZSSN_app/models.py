@@ -18,13 +18,15 @@ class Sobrevivente(models.Model):
     lat = models.DecimalField('Latitude',max_digits=9, decimal_places=6)
     infectado = models.BooleanField(default=False)
     acusacoes = models.PositiveIntegerField('acusações',default=0)
- 
+    acusado_id = []
     itens = ['Água','Alimento','Medicação','Munição']
 
     ultimo_local = (log,lat)
     
     def __str__(self):
         return self.nome
+
+            
 
 
 class Inventario(models.Model):
@@ -34,6 +36,9 @@ class Inventario(models.Model):
     alimento = models.PositiveBigIntegerField('Alimento',default=0)
     medicacao = models.PositiveBigIntegerField('Medicação',default=0)
     municao = models.PositiveBigIntegerField('Munição',default=0)
+
+    def total_pontos(self):
+        return self.agua + self.alimento + self.medicacao + self.municao
 
 
 # Create your models here.

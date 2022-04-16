@@ -8,6 +8,7 @@ urlpatterns = [
     path('add/', views.add_sobreviventes, name='add_sobreviventes'),
     path('edit/<int:sobrevivente_pk>', views.edit_sobrevivente, name='edit_sobrevivente'),
     path('trocar_itens/<int:sobrevivente_pk>/<int:outro_pk>',views.trocar_itens, name='trocar_itens'),
-    path('acusar/<int:sobrevivente_pk>/<int:acusado_pk>',views.acusar,name='acusar')
+    path('acusar/<int:sobrevivente_pk>/<int:acusado_pk>',views.acusar,name='acusar'),
+    path('relatorio',views.relatorio,name='relatorio')
     
 ]

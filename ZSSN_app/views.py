@@ -152,3 +152,60 @@ def acusar(request, sobrevivente_pk, acusado_pk):
     }        
     return render(request, 'ZSSN/acusar_infectado.html', context)  
 
+
+def relatorio(request):
+
+    sobreviventes = Sobrevivente.objects.all()
+    inventarios = Inventario.objects.all()
+    q_inventarios = len(inventarios)
+    infectados = 0
+    agua = 0
+    alimento = 0
+    medicacao =0
+    municao =0
+    pontos_perdidos = 0
+
+    
+
+
+    for sobrevivente in sobreviventes:
+        if sobrevivente.infectado == True:
+            infectados += 1
+            itens = Inventario.objects.get(sobrevivente=sobrevivente)
+            pontos_perdidos += itens.total_pontos()
+
+        itens = sobrevivente.itens
+
+    for item in inventarios:
+        agua += item.agua
+        alimento += item.alimento
+        medicacao += item.medicacao
+        municao += item.municao
+
+    agua = int(agua/q_inventarios)
+    alimento = int(alimento/q_inventarios)
+    medicacao = int(medicacao/q_inventarios)
+    municao = int(municao/q_inventarios)
+
+    q_item =  [agua, alimento,medicacao,municao]
+
+    itens = zip(itens, q_item)
+
+    infectados_p = round(infectados/len(sobreviventes),2) * 100   
+    n_infectados_p = round((len(sobreviventes) - infectados)/len(sobreviventes),2) * 100
+
+    context = {
+        'infectados_p':infectados_p,
+        'n_infectados_p':n_infectados_p,
+        'agua':agua,
+        'alimento': alimento,
+        'medicacao': medicacao,
+        'municao': municao,
+        'pontos_perdidos': pontos_perdidos,
+        'itens': itens
+    }
+    return render(request, 'ZSSN/relatorio.html',context)
+
+
+    
+
