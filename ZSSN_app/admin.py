@@ -1,5 +1,4 @@
 from django.contrib import admin
-from jmespath import search
 from ZSSN_app.models import Sobrevivente,Inventario
 
 
