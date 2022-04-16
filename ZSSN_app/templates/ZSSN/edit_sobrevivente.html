@@ -39,7 +39,7 @@
             </form>
             <hr>
 
-            <h4><li>Outros Sobreviventes:</li></h4>
+            <h4><li>Outros Sobreviventes: </li></h4>
             <table class='table'>
 
                 <thead>
@@ -57,7 +57,7 @@
                     <td>{{outros.infectado}}</td>
                     <td>{{outros.acusacoes}}</td>
                     <td> {% if outros.infectado == False and sobrevivente.infectado == False %}    
-                            <a href="{% url 'acusar' sobrevivente.id outros.id %}" id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</a>                    
+                            <a href="{% url 'acusar' sobrevivente.id outros.id %}" ><button id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</button> </a>                    
                             <a href="{% url 'trocar_itens' sobrevivente.id outros.id %}" class='btn btn-warning'>Trocar Itens</a>
                         {% endif%}
                     </td>    
@@ -76,18 +76,13 @@
     crossorigin="anonymous">
 </script>
 
-
 <script> 
-
-    
-
-    $.each({{outros_id}}, function(i,value){ 
-        var click = false
-
-        $('#btn_infectado'+value).click( function(){
-            console.log('click')
-            $('#btn_infectado'+value).attr('disabled',true)
-    
+    $.each({{outros_id}}, function(i,id1){ 
+        $.each({{sobrevivente.infectados_relatados}}, function(i,id2){
+            console.log(id1,id2)
+            if(id1 == id2){
+                $('#btn_infectado'+id1).attr('disabled',true)
+            }
         })
     })
 </script>   

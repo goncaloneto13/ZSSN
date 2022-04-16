@@ -1,6 +1,9 @@
 from email.policy import default
+from operator import truediv
 from xml.etree.ElementInclude import default_loader
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
 #from uuid import uuid4
 
 
@@ -33,7 +36,8 @@ class Sobrevivente(models.Model):
     lat = models.DecimalField('Latitude',max_digits=9, decimal_places=6)
     infectado = models.BooleanField(default=False)
     acusacoes = models.PositiveIntegerField('acusações',default=0)
-    acusado_id = []
+    infectados_relatados = ArrayField(models.IntegerField(blank=True),default= list, blank=True)
+    
     itens = ['Água','Alimentação','Medicação','Munição']
     inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE,default=False)
 

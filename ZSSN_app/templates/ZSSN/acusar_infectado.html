@@ -8,7 +8,7 @@
         <h4>Tem certeza que {{acusado.nome }} está Infectado? </h4>
         <form action="{% url 'acusar' sobrevivente.id acusado.id%}" method='post'>
             {% csrf_token %}
-            <span hidden =''>{{acusar_form}}</span>
+            <span hidden>{{acusar_form}} {{form}} </span>
             <hr>
             <h4>Acusações: {{acusado.acusacoes}}</h4>
             <hr>

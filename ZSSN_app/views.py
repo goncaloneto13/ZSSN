@@ -32,7 +32,6 @@ def add_sobreviventes(request):
 
 def edit_sobrevivente(request, sobrevivente_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
-    #inventario = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
     outros_sob = Sobrevivente.objects.all()
     form = LocalForm(request.POST or None, instance=sobrevivente)   
 
@@ -112,6 +111,9 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
 def acusar(request, sobrevivente_pk, acusado_pk):
     acusado = Sobrevivente.objects.get(pk=acusado_pk)
     acusar_form = AcusacoesForm(request.POST or None, instance=acusado)
+    sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
+    form = LocalForm(request.POST or None, instance=sobrevivente)
+   
   
     if request.POST:   
     
@@ -119,6 +121,13 @@ def acusar(request, sobrevivente_pk, acusado_pk):
             print(acusado.acusacoes)
             acusar_form_ = acusar_form.save(commit=False)
             acusar_form_.acusacoes += 1
+
+          
+            form_ = form.save(commit=False)
+            form_.infectados_relatados.append(acusado_pk)
+            form_.save()
+            
+
             if (acusado.acusacoes >= 3):     
                 acusar_form_.infectado = True
 
@@ -127,10 +136,9 @@ def acusar(request, sobrevivente_pk, acusado_pk):
             return redirect('edit_sobrevivente',sobrevivente_pk)
 
              
-    sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
+   
     outros_sob = Sobrevivente.objects.all()
-    form = LocalForm(request.POST or None, instance=sobrevivente)
-
+   
     outros_id = []
     for o in outros_sob:
         outros_id.append(o.id)
