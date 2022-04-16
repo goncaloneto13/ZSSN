@@ -84,14 +84,14 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
 
             form_s0_ = form_s0.save(commit=False)
             form_s0_.agua = novos_itens0[0]
-            form_s0_.alimento = novos_itens0[1]
+            form_s0_.alimentacao = novos_itens0[1]
             form_s0_.medicacao = novos_itens0[2]
             form_s0_.municao = novos_itens0[3]
             form_s0_.save()
   
             form_s1_ = form_s1.save(commit=False)
             form_s1_.agua = novos_itens1[0]
-            form_s1_.alimento = novos_itens1[1]
+            form_s1_.alimentacao = novos_itens1[1]
             form_s1_.medicacao = novos_itens1[2]
             form_s1_.municao = novos_itens1[3]
             form_s1_.save()
@@ -159,7 +159,7 @@ def relatorio(request):
     q_inventarios = len(inventarios)
     infectados = 0
     agua = 0
-    alimento = 0
+    alimentacao = 0
     medicacao =0
     municao =0
     pontos_perdidos = 0
@@ -174,16 +174,16 @@ def relatorio(request):
 
     for item in inventarios:
         agua += item.agua
-        alimento += item.alimento
+        alimentacao += item.alimentacao
         medicacao += item.medicacao
         municao += item.municao
 
     agua = int(agua/q_inventarios)
-    alimento = int(alimento/q_inventarios)
+    alimentacao = int(alimentacao/q_inventarios)
     medicacao = int(medicacao/q_inventarios)
     municao = int(municao/q_inventarios)
 
-    q_item =  [agua, alimento,medicacao,municao]
+    q_item =  [agua, alimentacao,medicacao,municao]
 
     itens = zip(itens, q_item)
 
@@ -194,7 +194,7 @@ def relatorio(request):
         'infectados_p':infectados_p,
         'n_infectados_p':n_infectados_p,
         'agua':agua,
-        'alimento': alimento,
+        'alimentacao': alimentacao,
         'medicacao': medicacao,
         'municao': municao,
         'pontos_perdidos': pontos_perdidos,

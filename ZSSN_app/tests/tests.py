@@ -27,7 +27,7 @@ class ZNNSTestCase(TestCase):
 
         i1 = Inventario.objects.create(
             agua = 2,
-            alimento = 3,
+            alimentacao = 3,
             medicacao = 4,
             municao = 5,
             sobrevivente = p1
@@ -35,7 +35,7 @@ class ZNNSTestCase(TestCase):
 
         i2= Inventario.objects.create(
             agua = 3,
-            alimento = 4,
+            alimentacao = 4,
             medicacao = 5,
             municao = 6,
             sobrevivente = p2

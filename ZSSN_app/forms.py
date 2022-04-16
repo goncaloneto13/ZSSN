@@ -23,4 +23,4 @@ class AcusacoesForm(forms.ModelForm):
 class InventarioForm(forms.ModelForm):
     class Meta:
         model= Inventario
-        fields = ['agua','alimento','medicacao','municao']
+        fields = ['agua','alimentacao','medicacao','municao']

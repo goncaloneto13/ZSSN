@@ -8,15 +8,15 @@ from django.db import models
 class Inventario(models.Model):
 
     agua = models.PositiveIntegerField('Água',default=0)
-    alimento = models.PositiveBigIntegerField('Alimento',default=0)
+    alimentacao = models.PositiveBigIntegerField('Alimentação',default=0)
     medicacao = models.PositiveBigIntegerField('Medicação',default=0)
     municao = models.PositiveBigIntegerField('Munição',default=0)
 
     def total_pontos(self):
-        return self.agua + self.alimento + self.medicacao + self.municao
+        return self.agua + self.alimentacao + self.medicacao + self.municao
 
     def quant_itens(self):
-        return [self.agua,self.alimento,self.medicacao,self.municao]    
+        return [self.agua,self.alimentacao,self.medicacao,self.municao]    
 
 class Sobrevivente(models.Model):
 
@@ -34,7 +34,7 @@ class Sobrevivente(models.Model):
     infectado = models.BooleanField(default=False)
     acusacoes = models.PositiveIntegerField('acusações',default=0)
     acusado_id = []
-    itens = ['Água','Alimento','Medicação','Munição']
+    itens = ['Água','Alimentação','Medicação','Munição']
     inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE,default=False)
 
     ultimo_local = (log,lat)
