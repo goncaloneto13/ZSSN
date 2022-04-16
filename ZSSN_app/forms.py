@@ -8,7 +8,7 @@ class SobreviventeForm(forms.ModelForm):
     class Meta:
         model = Sobrevivente
         fields = '__all__'
-        exclude = ['infectado','acusacoes']
+        exclude = ['infectado','acusacoes','inventario']
 
 class LocalForm(forms.ModelForm):
     class Meta:

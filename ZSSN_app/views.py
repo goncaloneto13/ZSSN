@@ -18,10 +18,10 @@ def add_sobreviventes(request):
 
     if request.POST:
         if form.is_valid() and form_inventario.is_valid():
-            form.save()
-            form_inventario_ = form_inventario.save(commit=False)
-            form_inventario_.sobrevivente = Sobrevivente.objects.get(pk=form.save(commit=False).id)
-            form_inventario_.save()
+            form_inventario.save()
+            form_ = form.save(commit=False)
+            form_.inventario = Inventario.objects.get(pk=form_inventario.save(commit=False).id)
+            form_.save()
             return redirect('home')
 
     context = { 
@@ -32,7 +32,7 @@ def add_sobreviventes(request):
 
 def edit_sobrevivente(request, sobrevivente_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
-    inventario = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
+    #inventario = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
     outros_sob = Sobrevivente.objects.all()
     form = LocalForm(request.POST or None, instance=sobrevivente)   
 
@@ -50,7 +50,6 @@ def edit_sobrevivente(request, sobrevivente_pk):
         'sobrevivente': sobrevivente,
         'outros_sob': outros_sob,
         'outros_id': outros_id,
-        'inventario': inventario
     }        
     return render(request, 'ZSSN/edit_sobrevivente.html', context)
 
@@ -58,27 +57,27 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
     outro_s = Sobrevivente.objects.get(pk=outro_pk)
 
-    inventario0 = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
-    inventario1= Inventario.objects.get(sobrevivente_id=outro_pk)
+    #inventario0 = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
+    #inventario1= Inventario.objects.get(sobrevivente_id=outro_pk)
    
-    form_s0 = InventarioForm(request.POST or None, instance=inventario0)
-    form_s1 = InventarioForm(request.POST or None, instance=inventario1)
+    form_s0 = InventarioForm(request.POST or None, instance=sobrevivente.inventario)
+    form_s1 = InventarioForm(request.POST or None, instance=outro_s.inventario)
 
-    itens0 = [inventario0.agua,inventario0.alimento,inventario0.medicacao,inventario0.municao]
-    itens1 = [inventario1.agua,inventario1.alimento,inventario1.medicacao,inventario1.municao]
+    itens0 = sobrevivente.inventario.quant_itens()
+    itens1 = outro_s.inventario.quant_itens()
 
     if request.POST:
         if form_s0.is_valid() and form_s1.is_valid():
-            s0_novos_itens= request.POST.get('s0_novos_itens',None)
-            s0_itens = request.POST.get('s0_itens',None)
-            s1_novos_itens = request.POST.get('s1_novos_itens',None)
-            s1_itens = request.POST.get('s1_itens',None)
+            s0_novos_itens= request.POST.get('s0_novos_itens',None).split(',')
+            s0_itens = request.POST.get('s0_itens',None).split(',')
+            s1_novos_itens = request.POST.get('s1_novos_itens',None).split(',')
+            s1_itens = request.POST.get('s1_itens',None).split(',')
 
             print( s0_novos_itens, s0_itens, s1_novos_itens, s1_itens)
             novos_itens0 = []
             novos_itens1 = []
 
-            for i in range(0,8,2):
+            for i in range(0,4):
                 novos_itens0.append(int(s0_itens[i]) + int(s1_novos_itens[i]))
                 novos_itens1.append(int(s1_itens[i]) + int(s0_novos_itens[i]))
             print( novos_itens0, novos_itens1)    
@@ -165,13 +164,10 @@ def relatorio(request):
     municao =0
     pontos_perdidos = 0
 
-    
-
-
     for sobrevivente in sobreviventes:
         if sobrevivente.infectado == True:
             infectados += 1
-            itens = Inventario.objects.get(sobrevivente=sobrevivente)
+            itens = sobrevivente.inventario
             pontos_perdidos += itens.total_pontos()
 
         itens = sobrevivente.itens

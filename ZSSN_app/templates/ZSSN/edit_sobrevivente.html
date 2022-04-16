@@ -19,10 +19,10 @@
                     <th>Quantidade</th>
                 </thead>     
               
-                <tr> <td>Água :</td> <td>{{inventario.agua}} </td></tr>
-                <tr> <td>Alimento:</td> <td>{{inventario.alimento}}</td> </tr>
-                <tr> <td>Medicação :</td> <td>{{inventario.medicacao}}</td> </tr>
-                <tr> <td>Munição :</td> <td>{{inventario.municao}}</td> </tr>
+                <tr> <td>Água :</td> <td>{{sobrevivente.inventario.agua}} </td></tr>
+                <tr> <td>Alimento:</td> <td>{{sobrevivente.inventario.alimento}}</td> </tr>
+                <tr> <td>Medicação :</td> <td>{{sobrevivente.inventario.medicacao}}</td> </tr>
+                <tr> <td>Munição :</td> <td>{{sobrevivente.inventario.municao}}</td> </tr>
         
             </table>
 
@@ -31,11 +31,11 @@
             <h4><li>Alterar Local:</li></h4>
             <form action="{% url 'edit_sobrevivente' sobrevivente.id %}" method = 'post'>
                 {% csrf_token %}
-                {{ form.as_p }}
-
+                <table class='table'>
+                    {{ form.as_table}}
+                </table>
                 <button class='btn btn-success' type='submit'>Salvar</button>
-                <!--<a href="{% url 'home' %}" class='btn btn-danger' >Cancelar</a>-->
-
+              
             </form>
             <hr>
 

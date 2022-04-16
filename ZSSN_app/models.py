@@ -4,7 +4,22 @@ from django.db import models
 #from uuid import uuid4
 
 
+
+class Inventario(models.Model):
+
+    agua = models.PositiveIntegerField('Água',default=0)
+    alimento = models.PositiveBigIntegerField('Alimento',default=0)
+    medicacao = models.PositiveBigIntegerField('Medicação',default=0)
+    municao = models.PositiveBigIntegerField('Munição',default=0)
+
+    def total_pontos(self):
+        return self.agua + self.alimento + self.medicacao + self.municao
+
+    def quant_itens(self):
+        return [self.agua,self.alimento,self.medicacao,self.municao]    
+
 class Sobrevivente(models.Model):
+
 
     SEXO_CHOICES =(
         ("F","Feminino"),
@@ -20,25 +35,12 @@ class Sobrevivente(models.Model):
     acusacoes = models.PositiveIntegerField('acusações',default=0)
     acusado_id = []
     itens = ['Água','Alimento','Medicação','Munição']
+    inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE,default=False)
 
     ultimo_local = (log,lat)
     
     def __str__(self):
         return self.nome
-
-            
-
-
-class Inventario(models.Model):
-
-    sobrevivente = models.ForeignKey(Sobrevivente,on_delete= models.CASCADE)
-    agua = models.PositiveIntegerField('Água',default=0)
-    alimento = models.PositiveBigIntegerField('Alimento',default=0)
-    medicacao = models.PositiveBigIntegerField('Medicação',default=0)
-    municao = models.PositiveBigIntegerField('Munição',default=0)
-
-    def total_pontos(self):
-        return self.agua + self.alimento + self.medicacao + self.municao
 
 
 # Create your models here.
