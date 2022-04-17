@@ -39,7 +39,6 @@ pip install -r requirements.txt
 ```
 
 4. Edit database in ```/ZSSN/settings.py```:
-
 ```
 DATABASES = {
     'default': {
@@ -62,4 +61,11 @@ python manage.py migrate
 python manage.py runserver
 ```
 Development server at  http://localhost:8000/
+
+## Run Test
+
+```
+python manage.py test
+```
+
 
