@@ -10,7 +10,7 @@ class Sobreviventes(admin.ModelAdmin):
 admin.site.register(Sobrevivente, Sobreviventes)    
 
 class Inventarios(admin.ModelAdmin):
-    list_display = ('agua','alimentacao','medicacao','municao')
+    list_display = ('id','agua','alimentacao','medicacao','municao')
 
 admin.site.register(Inventario,Inventarios)    
 

@@ -22,7 +22,7 @@ def add_sobreviventes(request):
             sobrevivente = form.save(commit=False)
             sobrevivente.inventario = inventario
             sobrevivente.save()
-            
+
             return redirect('home')
 
     context = { 
@@ -61,15 +61,13 @@ def edit_sobrevivente(request, sobrevivente_pk):
 def trocar_itens(request,sobrevivente_pk,outro_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
     outro_s = Sobrevivente.objects.get(pk=outro_pk)
-
-    #inventario0 = Inventario.objects.get(sobrevivente_id=sobrevivente_pk)
-    #inventario1= Inventario.objects.get(sobrevivente_id=outro_pk)
    
     form_s0 = InventarioForm(request.POST or None, instance=sobrevivente.inventario)
     form_s1 = InventarioForm(request.POST or None, instance=outro_s.inventario)
 
     itens0 = sobrevivente.inventario.quant_itens()
     itens1 = outro_s.inventario.quant_itens()
+    itens_pontos = sobrevivente.inventario.pontos_itens()
 
     if request.POST:
         if form_s0.is_valid() and form_s1.is_valid():
@@ -100,8 +98,7 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
             form_s1_.medicacao = novos_itens1[2]
             form_s1_.municao = novos_itens1[3]
             form_s1_.save()
-     
-            
+    
             return redirect('trocar_itens',sobrevivente_pk,outro_pk)
   
     context ={
@@ -111,6 +108,7 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
         'qtd_itens1':itens1,
         'form_s0':form_s0,
         'form_s1':form_s1,
+        'itens_pontos': itens_pontos
        
     }
     return render(request, 'ZSSN/trocar_itens.html', context)
@@ -121,7 +119,6 @@ def acusar(request, sobrevivente_pk, acusado_pk):
     sobrevivente = Sobrevivente.objects.get(pk=sobrevivente_pk)
     form = LocalForm(request.POST or None, instance=sobrevivente)
    
-  
     if request.POST:   
     
         if acusar_form.is_valid():
@@ -129,12 +126,10 @@ def acusar(request, sobrevivente_pk, acusado_pk):
             acusar_form_ = acusar_form.save(commit=False)
             acusar_form_.acusacoes += 1
 
-          
             form_ = form.save(commit=False)
             form_.infectados_relatados.append(acusado_pk)
             form_.save()
             
-
             if (acusado.acusacoes >= 3):     
                 acusar_form_.infectado = True
 

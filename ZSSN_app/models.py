@@ -21,6 +21,10 @@ class Inventario(models.Model):
 
     def quant_itens(self):
         return [self.agua,self.alimentacao,self.medicacao,self.municao]    
+    
+    def pontos_itens(self):
+        return {'Água': 4,'Alimentação': 3,'Medicação': 2 ,'Munição': 1}
+
 
 class Sobrevivente(models.Model):
 

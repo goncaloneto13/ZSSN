@@ -5,10 +5,14 @@
 <div class="card bg-light mb-3" style="max-width: 48rem;">
     <div class="card-header" >    <h3>Sobrevivente: {{ sobrevivente.nome }}  </h3> </div>
     <div class="card-body" align="left">
-  
-        <h4>Trocar itens com {{outro_s.nome}}</h4>
-        <hr>
-                      
+
+        <table class='table'>
+            <tr>
+                <td><h4>Meus itens:</h4></td>
+                <td><h4>Soma de pontos: <span name='total_pontos{{sobrevivente.id}}'></span></h4></td>
+            </tr>
+        </table>
+            
         <form type='form-group' action="{% url 'trocar_itens' sobrevivente.id outro_s.id%}" method='post'>
             <span hidden>{{form_s0.as_p}}{{form_s1.as_p}}</span>
             {% csrf_token %}
@@ -26,7 +30,7 @@
 
                 {% for item in sobrevivente.itens %}
                     <tr>
-                        <h5> <td>{{item}}
+                        <h5> <td>{{item}} 
                         <td> <input name="{{item}}{{sobrevivente.id}}"disabled='true' size=1></input> </td> 
                         <td> <a name='sub{{item}}{{sobrevivente.id}}'class='btn btn-danger'>-</a> 
                              <a name="soma{{item}}{{sobrevivente.id}}" class='btn btn-success'>+</a>  </td>
@@ -41,10 +45,15 @@
             <input name='s0_novos_itens' hidden=''>
             <input name='s0_itens' hidden=''>
             <hr>
-            <h4><li>Meus Pontos:   <span name='total_pontos{{sobrevivente.id}}'></span></li></h4>
-            <hr>        
-            <h4><li>Pontos de {{outro_s.nome}}:   <span name='total_pontos{{outro_s.id}}'></span> </li></h4>
-            <hr>
+            
+           
+            <table class='table'>
+                <tr>
+                    <td><h4>Itens de {{outro_s.nome}}:</h4></td>
+                    <td><h4>Soma de pontos de {{outro_s.nome}}:   <span name='total_pontos{{outro_s.id}}'></span></h4></td>
+                </tr>
+            </table>
+  
             <table class='table'>
                 <thead class="thead-dark">
                     <th >Item</th>
