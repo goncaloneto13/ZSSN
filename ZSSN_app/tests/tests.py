@@ -10,27 +10,14 @@ class ZNNSTestCase(TestCase):
 
     def setUp(self):
 
-        i1 = Inventario.objects.create(
-            agua = 2,
-            alimentacao = 3,
-            medicacao = 4,
-            municao = 5,
-        )
-
-        i2= Inventario.objects.create(
-            agua = 3,
-            alimentacao = 4,
-            medicacao = 5,
-            municao = 6,
-        )
-
+      
         p1 = Sobrevivente.objects.create(
             nome = 'Teste1',
             data_n = "1994-09-12",
             sexo = 'F', 
             log = 0,
             lat = 0,
-            inventario = i1
+    
         )
 
         p2 = Sobrevivente.objects.create(
@@ -39,8 +26,25 @@ class ZNNSTestCase(TestCase):
             sexo = 'M', 
             log = 0,
             lat = 0,
-            inventario = i2
+
         )
+
+        i1 = Inventario.objects.create(
+            agua = 2,
+            alimentacao = 3,
+            medicacao = 4,
+            municao = 5,
+            sobrevivente = p1
+        )
+
+        i2= Inventario.objects.create(
+            agua = 3,
+            alimentacao = 4,
+            medicacao = 5,
+            municao = 6,
+            sobrevivente = p2
+        )
+
 
     def test_view_url(self):
         response = self.client.get('/add/')

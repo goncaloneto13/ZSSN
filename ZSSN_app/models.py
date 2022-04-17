@@ -51,7 +51,7 @@ class Inventario(models.Model):
     alimentacao = models.PositiveBigIntegerField('Alimentação',default=0)
     medicacao = models.PositiveBigIntegerField('Medicação',default=0)
     municao = models.PositiveBigIntegerField('Munição',default=0)
-    sobrevivente = models.OneToOneField(Sobrevivente, on_delete=models.CASCADE)
+    sobrevivente = models.OneToOneField(Sobrevivente,on_delete=models.CASCADE)
 
     def total_pontos(self):
         return self.agua + self.alimentacao + self.medicacao + self.municao
