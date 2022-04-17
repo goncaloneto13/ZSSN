@@ -8,8 +8,8 @@
 
         <table class='table'>
             <tr>
-                <td><h4>Meus itens:</h4></td>
-                <td><h4>Soma de pontos: <span name='total_pontos{{sobrevivente.id}}'></span></h4></td>
+                <td><h4><li> Meus itens:</li></h4></td>
+                <td><h5>Soma de pontos: <span name='total_pontos{{sobrevivente.id}}'></span></h5></td>
             </tr>
         </table>
             
@@ -49,8 +49,8 @@
            
             <table class='table'>
                 <tr>
-                    <td><h4>Itens de {{outro_s.nome}}:</h4></td>
-                    <td><h4>Soma de pontos de {{outro_s.nome}}:   <span name='total_pontos{{outro_s.id}}'></span></h4></td>
+                    <td><h4><li> Itens de {{outro_s.nome}}:</li></h4></td>
+                    <td><h5>Soma de pontos de {{outro_s.nome}}:   <span name='total_pontos{{outro_s.id}}'></span></h5></td>
                 </tr>
             </table>
   
@@ -126,7 +126,7 @@
                     $('[name=total_pontos'+user+"]").text(total_pontos[id])
         
                     if(total_pontos[0] != total_pontos[1]){
-                        $('#alert').text('A quantidade de pontos deve ser a mesma')
+                        $('#alert').text('A quantidade da soma dos pontos deve ser a mesma')
                         $('#trocar').attr('disabled',true)
                     }else{
                         $('#alert').text('Itens prontos para a troca')
@@ -152,7 +152,7 @@
                     $('[name=total_pontos'+user+"]").text(total_pontos[id])
                    
                 if(total_pontos[0] != total_pontos[1]){
-                    $('#alert').text('A quantidade de pontos deve ser a mesma')
+                    $('#alert').text('A quantidade da soma dos pontos deve ser a mesma')
                     $('#trocar').attr('disabled',true)
                 }else{
                     $('#alert').text('Itens prontos para a troca')

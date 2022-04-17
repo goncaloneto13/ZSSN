@@ -3,7 +3,16 @@
 
 {% block content %}
 <div class="card bg-light mb-3" style="max-width: 48rem;">
-    <div class="card-header">  <h3>Sobrevivente: {{ sobrevivente.nome }}  <a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a> </div>
+    <div class="card-header">  
+        <table class='table'>
+            <tr><td></td><td></td><td></td>            
+              <td>  <center><h3>Sobrevivente: {{ sobrevivente.nome }} </h3></center></td>
+                <td> <center><a align ='right' href="{% url 'home' %}" class='btn btn-danger'>Sair</a></center></td>
+            </tr>
+        </table>
+       
+    </div>
+
     <div class="card-body" align="left">
        
         <table class='table'>
