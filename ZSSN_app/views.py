@@ -35,6 +35,8 @@ def edit_sobrevivente(request, sobrevivente_pk):
     outros_sob = Sobrevivente.objects.all()
     form = LocalForm(request.POST or None, instance=sobrevivente)   
 
+    idade = sobrevivente.idade()
+
     outros_id = []
     for o in outros_sob:
         outros_id.append(o.id)
@@ -49,6 +51,7 @@ def edit_sobrevivente(request, sobrevivente_pk):
         'sobrevivente': sobrevivente,
         'outros_sob': outros_sob,
         'outros_id': outros_id,
+        'idade': idade
     }        
     return render(request, 'ZSSN/edit_sobrevivente.html', context)
 
@@ -104,7 +107,8 @@ def trocar_itens(request,sobrevivente_pk,outro_pk):
         'qtd_itens0':itens0,
         'qtd_itens1':itens1,
         'form_s0':form_s0,
-        'form_s1':form_s1
+        'form_s1':form_s1,
+       
     }
     return render(request, 'ZSSN/trocar_itens.html', context)
 

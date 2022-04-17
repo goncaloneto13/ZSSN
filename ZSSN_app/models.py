@@ -3,6 +3,7 @@ from operator import truediv
 from xml.etree.ElementInclude import default_loader
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from datetime import datetime
 
 #from uuid import uuid4
 
@@ -30,7 +31,7 @@ class Sobrevivente(models.Model):
     )
 
     nome = models.CharField(max_length=255)
-    idade = models.PositiveIntegerField()
+    data_n = models.DateField('Data de Nascimento')
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, null=False, blank=False)
     log = models.DecimalField('Longitude', max_digits=9, decimal_places=6)
     lat = models.DecimalField('Latitude',max_digits=9, decimal_places=6)
@@ -46,5 +47,10 @@ class Sobrevivente(models.Model):
     def __str__(self):
         return self.nome
 
+    def idade(self):
+        born = self.data_n
+        today = datetime.today()
+        return today.year - born.year - ((today.month,  today.day) < (born.month, born.day))
+    
 
 # Create your models here.
