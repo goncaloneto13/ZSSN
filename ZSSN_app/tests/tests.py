@@ -9,28 +9,12 @@ from django.urls import reverse
 class ZNNSTestCase(TestCase):
 
     def setUp(self):
-        p1 = Sobrevivente.objects.create(
-            nome = 'Teste1',
-            idade = 23,
-            sexo = 'F', 
-            log = 0,
-            lat = 0,
-        )
-
-        p2 = Sobrevivente.objects.create(
-            nome = 'Teste2',
-            idade = 25,
-            sexo = 'M', 
-            log = 0,
-            lat = 0,
-        )
 
         i1 = Inventario.objects.create(
             agua = 2,
             alimentacao = 3,
             medicacao = 4,
             municao = 5,
-            sobrevivente = p1
         )
 
         i2= Inventario.objects.create(
@@ -38,9 +22,25 @@ class ZNNSTestCase(TestCase):
             alimentacao = 4,
             medicacao = 5,
             municao = 6,
-            sobrevivente = p2
         )
 
+        p1 = Sobrevivente.objects.create(
+            nome = 'Teste1',
+            data_n = "1994-09-12",
+            sexo = 'F', 
+            log = 0,
+            lat = 0,
+            inventario = i1
+        )
+
+        p2 = Sobrevivente.objects.create(
+            nome = 'Teste2',
+            data_n = "1998-08-13",
+            sexo = 'M', 
+            log = 0,
+            lat = 0,
+            inventario = i2
+        )
 
     def test_view_url(self):
         response = self.client.get('/add/')
@@ -89,8 +89,8 @@ class ZNNSTestCase(TestCase):
         response = self.client.get(reverse('edit_sobrevivente', args=[p1.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'ZSSN/edit_sobrevivente.html')    
-        self.assertEqual(response.context['inventario'], Inventario.objects.get(id=p1.id))
-        self.assertTrue(response.context['sobrevivente'] == p1)  
+        self.assertEqual(response.context['idade'], 27)
+        self.assertEqual(response.context['sexo'],'Feminino')  
         #self.assertEqual(response.context['outros_sob'],Sobrevivente.objects.all())  
 
     def test_view_uses_correct_template_and_context_trocar_itens(self):     
