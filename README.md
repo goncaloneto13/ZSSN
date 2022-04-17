@@ -13,7 +13,9 @@ In SQL Shell (psql):
 
 1. Create Database:
 
- ```CREATE DATABASE ZSSN; ```
+ ```
+ CREATE DATABASE ZSSN; 
+ ```
 
 ## Getting started
 
@@ -36,7 +38,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-4. Edit database user password in ```/ZSSN/settings.py```:
+4. Edit database in ```/ZSSN/settings.py```:
 
 ```
 DATABASES = {
@@ -53,7 +55,6 @@ DATABASES = {
 5. Create the DB tables:
 
 ```
-python manage.py makemigrations
 python manage.py migrate
 ```
 5. Run Server:
