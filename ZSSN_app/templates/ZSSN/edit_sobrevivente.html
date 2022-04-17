@@ -66,7 +66,7 @@
                     </td>
                     <td>{{outros.acusacoes}}</td>
                     <td> {% if outros.infectado == False and sobrevivente.infectado == False %}    
-                            <a href="{% url 'acusar' sobrevivente.id outros.id %}" ><button id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</button> </a>                    
+                            <a href="{% url 'acusar' sobrevivente.id outros.id %}" id='link_infectado{{outros.id}}' ><button id='btn_infectado{{outros.id}}' class='btn btn-danger'>Acusar Infectado</button> </a>                    
                             <a href="{% url 'trocar_itens' sobrevivente.id outros.id %}" class='btn btn-warning'>Trocar Itens</a>
                      
                         {% endif%}
@@ -91,6 +91,7 @@
         $.each({{sobrevivente.infectados_relatados}}, function(i,id2){
             console.log(id1,id2)
             if(id1 == id2){
+                $('#link_infectado'+id1).removeAttr('href')
                 $('#btn_infectado'+id1).attr('disabled',true)
             }
         })

@@ -8,8 +8,7 @@
   
         <h4>Trocar itens com {{outro_s.nome}}</h4>
         <hr>
-        
-              
+                      
         <form type='form-group' action="{% url 'trocar_itens' sobrevivente.id outro_s.id%}" method='post'>
             <span hidden>{{form_s0.as_p}}{{form_s1.as_p}}</span>
             {% csrf_token %}
