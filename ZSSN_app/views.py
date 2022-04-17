@@ -22,6 +22,7 @@ def add_sobreviventes(request):
             sobrevivente = form.save(commit=False)
             sobrevivente.inventario = inventario
             sobrevivente.save()
+            
             return redirect('home')
 
     context = { 
