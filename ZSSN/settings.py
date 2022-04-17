@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'ZSSN.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ZSSN',
+        'NAME': 'zssn',
         'USER':'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost'
