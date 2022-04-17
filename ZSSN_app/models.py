@@ -47,6 +47,12 @@ class Sobrevivente(models.Model):
     def __str__(self):
         return self.nome
 
+    def Sexo(self):
+        if self.sexo == self.SEXO_CHOICES[0][0]:
+            return self.SEXO_CHOICES[0][1]
+        return self.SEXO_CHOICES[1][1]
+
+
     def idade(self):
         born = self.data_n
         today = datetime.today()

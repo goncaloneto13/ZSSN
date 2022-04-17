@@ -36,6 +36,7 @@ def edit_sobrevivente(request, sobrevivente_pk):
     form = LocalForm(request.POST or None, instance=sobrevivente)   
 
     idade = sobrevivente.idade()
+    sexo = sobrevivente.Sexo()
 
     outros_id = []
     for o in outros_sob:
@@ -51,7 +52,8 @@ def edit_sobrevivente(request, sobrevivente_pk):
         'sobrevivente': sobrevivente,
         'outros_sob': outros_sob,
         'outros_id': outros_id,
-        'idade': idade
+        'idade': idade,
+        'sexo': sexo
     }        
     return render(request, 'ZSSN/edit_sobrevivente.html', context)
 
