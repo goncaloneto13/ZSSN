@@ -18,10 +18,10 @@ def add_sobreviventes(request):
 
     if request.POST:
         if form.is_valid() and form_inventario.is_valid():
-            form_inventario.save()
-            form_ = form.save(commit=False)
-            form_.inventario = Inventario.objects.get(pk=form_inventario.save(commit=False).id)
-            form_.save()
+            inventario = form_inventario.save()
+            sobrevivente = form.save(commit=False)
+            sobrevivente.inventario = inventario
+            sobrevivente.save()
             return redirect('home')
 
     context = { 

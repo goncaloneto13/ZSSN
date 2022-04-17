@@ -7,7 +7,6 @@ from ZSSN_app.models import Inventario, Sobrevivente
 class SobreviventeForm(forms.ModelForm):
     class Meta:
         model = Sobrevivente
-        fields = '__all__'
         exclude = ['infectado','acusacoes','inventario','infectados_relatados']
 
 class LocalForm(forms.ModelForm):
