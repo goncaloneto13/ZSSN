@@ -9,22 +9,6 @@ from datetime import datetime
 
 
 
-class Inventario(models.Model):
-
-    agua = models.PositiveIntegerField('Água',default=0)
-    alimentacao = models.PositiveBigIntegerField('Alimentação',default=0)
-    medicacao = models.PositiveBigIntegerField('Medicação',default=0)
-    municao = models.PositiveBigIntegerField('Munição',default=0)
-
-    def total_pontos(self):
-        return self.agua + self.alimentacao + self.medicacao + self.municao
-
-    def quant_itens(self):
-        return [self.agua,self.alimentacao,self.medicacao,self.municao]    
-    
-    def pontos_itens(self):
-        return {'Água': 4,'Alimentação': 3,'Medicação': 2 ,'Munição': 1}
-
 
 class Sobrevivente(models.Model):
 
@@ -44,7 +28,6 @@ class Sobrevivente(models.Model):
     infectados_relatados = ArrayField(models.IntegerField(blank=True),default= list, blank=True)
     
     itens = ['Água','Alimentação','Medicação','Munição']
-    inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE,default=False)
 
     ultimo_local = (log,lat)
     
@@ -62,5 +45,23 @@ class Sobrevivente(models.Model):
         today = datetime.today()
         return today.year - born.year - ((today.month,  today.day) < (born.month, born.day))
     
+class Inventario(models.Model):
+
+    agua = models.PositiveIntegerField('Água',default=0)
+    alimentacao = models.PositiveBigIntegerField('Alimentação',default=0)
+    medicacao = models.PositiveBigIntegerField('Medicação',default=0)
+    municao = models.PositiveBigIntegerField('Munição',default=0)
+    sobrevivente = models.OneToOneField(Sobrevivente, on_delete=models.CASCADE)
+
+    def total_pontos(self):
+        return self.agua + self.alimentacao + self.medicacao + self.municao
+
+    def quant_itens(self):
+        return [self.agua,self.alimentacao,self.medicacao,self.municao]    
+    
+    def pontos_itens(self):
+        return {'Água': 4,'Alimentação': 3,'Medicação': 2 ,'Munição': 1}
+
+
 
 # Create your models here.

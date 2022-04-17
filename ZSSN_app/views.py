@@ -1,3 +1,4 @@
+from code import InteractiveInterpreter
 from multiprocessing import context
 from django.shortcuts import render,redirect
 from ZSSN_app.forms import AcusacoesForm, InventarioForm, SobreviventeForm,LocalForm
@@ -18,10 +19,14 @@ def add_sobreviventes(request):
 
     if request.POST:
         if form.is_valid() and form_inventario.is_valid():
-            inventario = form_inventario.save()
-            sobrevivente = form.save(commit=False)
-            sobrevivente.inventario = inventario
-            sobrevivente.save()
+            sobrevivente = form.save()
+            inventario_ = form_inventario.save(commit=False)
+            inventario_.sobrevivente = sobrevivente
+            inventario_.save()
+
+            #sobrevivente.inventario = inventario
+
+
 
             return redirect('home')
 
