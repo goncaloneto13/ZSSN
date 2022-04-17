@@ -29,8 +29,18 @@ class ZNNSTestCase(TestCase):
 
         )
 
+        p3 = Sobrevivente.objects.create(
+            nome = 'Teste3',
+            data_n = "1998-08-13",
+            sexo = 'M', 
+            log = 0,
+            lat = 0,
+            infectado = True
+
+        )
+
         i1 = Inventario.objects.create(
-            agua = 2,
+            agua = 100,
             alimentacao = 3,
             medicacao = 4,
             municao = 5,
@@ -39,10 +49,18 @@ class ZNNSTestCase(TestCase):
 
         i2= Inventario.objects.create(
             agua = 3,
-            alimentacao = 4,
-            medicacao = 5,
-            municao = 6,
+            alimentacao = 44,
+            medicacao = 50,
+            municao = 60,
             sobrevivente = p2
+        )
+
+        i3= Inventario.objects.create(
+            agua = 32,
+            alimentacao = 44,
+            medicacao = 50,
+            municao = 64,
+            sobrevivente = p3
         )
 
 
@@ -105,8 +123,8 @@ class ZNNSTestCase(TestCase):
         response = self.client.get(reverse('trocar_itens', args=[p1.id, p2.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'ZSSN/trocar_itens.html')
-        self.assertTrue(response.context['qtd_itens0'] == [2,3,4,5])  
-        self.assertTrue(response.context['qtd_itens1'] == [3,4,5,6])
+        self.assertTrue(response.context['qtd_itens0'] == [100,3,4,5])  
+        self.assertTrue(response.context['qtd_itens1'] == [3,44,50,60])
         self.assertTrue(response.context['sobrevivente'] == p1)  
         self.assertTrue(response.context['outro_s'] == p2) 
 
@@ -118,6 +136,34 @@ class ZNNSTestCase(TestCase):
         response = self.client.get(reverse('acusar',args=[p1.id, p2.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'ZSSN/acusar_infectado.html')    
+        
+    def test_relatorio_itens_medios(self):
+
+        p1 = Sobrevivente.objects.get(nome='Teste1')
+        p2 = Sobrevivente.objects.get(nome='Teste2') 
+        p3 = Sobrevivente.objects.get(nome='Teste3') 
+
+        response = self.client.get(reverse('relatorio'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ZSSN/relatorio.html')
+        self.assertEqual(response.context['agua'], 51)  
+        self.assertEqual(response.context['alimentacao'], 23)
+        self.assertEqual(response.context['medicacao'], 27)
+        self.assertEqual(response.context['municao'], 32)  
+
+        self.assertEqual(response.context['infectados_p'], 33.0)  
+        self.assertEqual(response.context['n_infectados_p'], 67.0)  
+
+        self.assertEqual(response.context['pontos_perdidos'], 190 )  
+
+
+
+
+
+
+
+
+
 
 
 

@@ -171,7 +171,6 @@ def relatorio(request):
 
     sobreviventes = Sobrevivente.objects.all()
     inventarios = Inventario.objects.all()
-    q_inventarios = len(inventarios)
     infectados = 0
     agua = 0
     alimentacao = 0
@@ -184,19 +183,19 @@ def relatorio(request):
             infectados += 1
             itens = sobrevivente.inventario
             pontos_perdidos += itens.total_pontos()
-
+        else:
+            agua += sobrevivente.inventario.agua
+            alimentacao += sobrevivente.inventario.alimentacao
+            medicacao += sobrevivente.inventario.medicacao
+            municao += sobrevivente.inventario.municao
         itens = sobrevivente.itens
 
-    for item in inventarios:
-        agua += item.agua
-        alimentacao += item.alimentacao
-        medicacao += item.medicacao
-        municao += item.municao
+    n_infectados = len(sobreviventes) - infectados
 
-    agua = int(agua/q_inventarios)
-    alimentacao = int(alimentacao/q_inventarios)
-    medicacao = int(medicacao/q_inventarios)
-    municao = int(municao/q_inventarios)
+    agua = int(agua/ n_infectados)
+    alimentacao = int(alimentacao/ n_infectados)
+    medicacao = int(medicacao/ n_infectados)
+    municao = int(municao/ n_infectados)
 
     q_item =  [agua, alimentacao,medicacao,municao]
 
@@ -204,6 +203,7 @@ def relatorio(request):
 
     infectados_p = round(infectados/len(sobreviventes),2) * 100   
     n_infectados_p = round((len(sobreviventes) - infectados)/len(sobreviventes),2) * 100
+
 
     context = {
         'infectados_p':infectados_p,
